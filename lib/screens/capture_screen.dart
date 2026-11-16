@@ -125,7 +125,7 @@ class _CaptureScreenState extends State<CaptureScreen> {
             ),
             const SizedBox(height: 12),
             DropdownButtonFormField<ProductCategory>(
-              value: _category,
+              initialValue: _category,
               decoration: const InputDecoration(
                 labelText: 'الفئة',
                 border: OutlineInputBorder(),
@@ -144,7 +144,7 @@ class _CaptureScreenState extends State<CaptureScreen> {
             ),
             const SizedBox(height: 12),
             DropdownButtonFormField<ProductCondition>(
-              value: _condition,
+              initialValue: _condition,
               decoration: const InputDecoration(
                 labelText: 'الحالة',
                 border: OutlineInputBorder(),

@@ -22,7 +22,7 @@ class ShareScreen extends StatelessWidget {
     );
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } else {
+    } else if (context.mounted) {
       _showError(context, 'تعذّر فتح واتساب');
     }
   }
