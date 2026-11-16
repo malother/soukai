@@ -39,13 +39,29 @@ class _CaptureScreenState extends State<CaptureScreen> {
   }
 
   Future<void> _pickImage(ImageSource source) async {
-    final picked = await _picker.pickImage(
-      source: source,
-      maxWidth: 1280,
-      imageQuality: 85,
-    );
-    if (picked != null) {
-      setState(() => _photoPath = picked.path);
+    try {
+      final picked = await _picker.pickImage(
+        source: source,
+        maxWidth: 1280,
+        imageQuality: 85,
+      );
+      if (picked != null && mounted) {
+        setState(() => _photoPath = picked.path);
+      }
+    } on Exception catch (_) {
+      // Camera unavailable, permission denied, or no camera app: tell the
+      // merchant instead of crashing the flow (image_picker throws
+      // PlatformException in all of these cases).
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            source == ImageSource.camera
+                ? 'تعذّر فتح الكاميرا — تحقق من الإذن وحاول مجدداً'
+                : 'تعذّر فتح المعرض — تحقق من الإذن وحاول مجدداً',
+          ),
+        ),
+      );
     }
   }
 
@@ -57,6 +73,20 @@ class _CaptureScreenState extends State<CaptureScreen> {
       );
       return;
     }
+    final min = double.tryParse(_minController.text.trim());
+    final max = double.tryParse(_maxController.text.trim());
+    if (min != null && max != null && min > max) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('أدنى سعر يجب أن يكون أقل من أعلى سعر')),
+      );
+      return;
+    }
+    if ((min != null && min < 0) || (max != null && max < 0)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('الأسعار لا يمكن أن تكون سالبة')),
+      );
+      return;
+    }
     setState(() => _generating = true);
     final product = Product(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
@@ -64,8 +94,8 @@ class _CaptureScreenState extends State<CaptureScreen> {
       category: _category,
       condition: _condition,
       photoPath: _photoPath,
-      comparableMin: double.tryParse(_minController.text.trim()),
-      comparableMax: double.tryParse(_maxController.text.trim()),
+      comparableMin: min,
+      comparableMax: max,
     );
     // TODO (PLAN.md days 7-9): swap in GeminiListingProvider via the worker.
     final generator = ListingGenerator(MockListingProvider());

@@ -15,15 +15,18 @@
       (deadline to request: 1 Dec 12:00 PT)
 
 ## Phase 2 — Flutter UI + camera (Days 2-5)
-- [ ] Run `flutter pub get` and `flutter analyze`, fix all issues
-- [ ] Home screen: catalog list, empty state, navigation
-- [ ] Capture screen: camera/gallery pick, product form (name, category,
+- [x] Run `flutter pub get` and `flutter analyze`, fix all issues
+- [x] Home screen: catalog list, empty state, navigation
+- [x] Capture screen: camera/gallery pick, product form (name, category,
       condition, comparable prices)
-- [ ] Listing screen: preview + edit all fields (AR + FR)
-- [ ] Share screen: system share sheet, WhatsApp deep link, copy text
+- [x] Listing screen: preview + edit all fields (AR + FR)
+- [x] Share screen: system share sheet, WhatsApp deep link, copy text
 
 ## Phase 3 — Generation (Days 6-9)
-- [ ] Wire mock provider end-to-end (capture → listing → share)
+- [x] Wire mock provider end-to-end (capture → listing → share)
+  - Verified by test/capture_flow_test.dart: fake image picker drives
+    camera pick → form → mock generate → listing edit → share screen.
+    Real camera/gallery still needs a phone test (no emulator in VM).
 - [ ] Price engine + unit tests (`flutter test`)
 - [ ] Gemini provider: implement via Cloudflare Worker (key in Worker
       secret, never in code); wire worker /generate to Gemini
