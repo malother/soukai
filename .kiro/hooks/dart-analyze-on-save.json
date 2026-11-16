@@ -1,0 +1,1 @@
+{"actions":[{"command":"dart analyze","timeoutMs":60000,"type":"command"}],"description":"Run dart analyze whenever a Dart file is saved, so lint and type errors surface immediately.","disabled":false,"name":"dart-analyze-on-save","trigger":{"patterns":["**/*.dart"],"type":"fileSaved"}}

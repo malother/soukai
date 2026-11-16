@@ -1,0 +1,15 @@
+{
+  "description": "SoukAI backend stub — Cloudflare Worker for listing generation (mock mode).",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241127.0",
+    "typescript": "^5.6.0",
+    "wrangler": "^3.90.0"
+  },
+  "name": "soukai-api",
+  "private": true,
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev"
+  },
+  "version": "0.1.0"
+}
